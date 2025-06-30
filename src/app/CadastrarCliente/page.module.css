@@ -1,0 +1,191 @@
+.containerCadastroCliente {
+  width: 100%;
+  height: 100vh;
+  background-color: #222831;
+  padding-left: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  font-family: Arial, Helvetica, sans-serif;
+
+  
+}
+.header {
+  width: 80%;
+  height: 100px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 0px;
+}
+
+.containerIcone {
+  width: 200px;
+}
+
+.formulario {
+  color: white;
+  width: 40%;
+  background-color: #393e46;
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.inputCadastro {
+  width: 100%;
+  border: none;
+  padding: 20px;
+  border-radius: 50px;
+  background-color: #383b41;
+  border: 1px solid rgba(0, 0, 0, 0.137);
+  color: white;
+}
+
+.label {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.NavForm {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  gap: 20px;
+}
+
+.bnt {
+  height: 50px;
+  padding: 10px;
+  background-color: #222831;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.icone {
+  height: 100%;
+  width: auto;
+
+  filter: brightness(0) invert(1);
+  transition: 1s;
+}
+
+.bnt:hover {
+  background-color: red;
+}
+
+.ScreanContatosinON {
+  border-radius: 20px;
+  height: 70vh;
+  width: 80vw;
+  background-color: rgb(61, 61, 61);
+  position: absolute;
+  z-index: 50;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.containerNavegação {
+  width: 100%;
+  height: 50px;
+  background-color: #393e46;
+  display: flex;
+  justify-content: end;
+}
+.containerNavegação_nav {
+  width: 100px;
+  padding: 10px;
+  background-color: #33363b;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.containerNavegação_nav:hover {
+  background-color: #ff0000;
+}
+
+.headerContatos {
+  width: 100%;
+  height: 50px;
+  background-color: #4a4c4e;
+  display: flex;
+  justify-content: end;
+}
+.ScreanContatosinClossed {
+  display: none;
+}
+
+.contato {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+
+
+.barraBusca {
+  height: 100%;
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.listaContatos {
+  width: 100%;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px); 
+}
+
+.contatoHeader {
+  font-weight: bold;
+  background-color: #393e46;
+  border-bottom: 2px solid #ddd;
+  position: sticky; /* Faz o cabeçalho ficar fixo no topo ao rolar */
+  top: 0;
+}
+
+.nenhumResultado {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: #666;
+}
+
+/* Ajuste no .contato para alinhar como uma tabela */
+.contato {
+  display: grid;
+  grid-template-columns: 50px 2fr 1fr 2fr 3fr; /* Define o tamanho das colunas: ID, Nome, Tel, Email, Endereço */
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.contato p {
+  margin: 0;
+  white-space: nowrap; /* Impede que o texto quebre linha */
+  overflow: hidden; /* Esconde o texto que não cabe */
+  text-overflow: ellipsis; /* Adiciona "..." ao texto que não cabe */
+}
