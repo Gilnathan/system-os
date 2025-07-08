@@ -1,0 +1,79 @@
+.containerPageTutorial {
+  width: 100%;
+  height: 100vh;
+  background-color: #222831;
+  padding-left: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  font-family: Arial, Helvetica, sans-serif;
+  gap: 10px;
+}
+
+.conatinerMain {
+  width: 40vw;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.titulo {
+  font-weight: bolder;
+  font-style: normal;
+  color: white;
+  font-size: 4rem;
+}
+.titulo span{
+  color: orange;
+}
+
+.conatinerMain h2{
+  color: rgb(255, 255, 255);
+  font-size: 1.2em;
+  
+}
+
+.ContainerFoto{
+  width: 100%;
+  height: 500px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.arte{
+  object-fit: cover;
+}
+
+.conatinerTutorial {
+  width: 50vw;
+  height: 80vh;
+  border-radius: 20px;
+  color: white;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.listaDasintrucoes span  {
+    background-color: orange;
+    color: rgb(255, 255, 255);
+    padding: 5px;
+    border-radius: 10%;
+    margin: 5px;
+
+}
+
+.listaDasintrucoes {
+  display: flex;
+  flex-direction: column;
+    list-style-type: none;
+    gap: 20px;
+}

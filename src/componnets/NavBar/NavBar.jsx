@@ -44,7 +44,7 @@ export default function NavBar() {
             </Link>
           </li>
           <li>
-            <Link href="/about" className={styles.link}>
+            <Link href="/CadastrarAparelho" className={styles.link}>
               <Image
                 src="/iconeEntrada.png"
                 alt="Logo"

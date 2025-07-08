@@ -2,39 +2,46 @@
 
 import styles from "./page.module.css";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import React from "react";
 import Lottie from "lottie-react";
 import animationData from "/public/Animation_contato2.json";
 
 export default function CadastroCliente() {
-  // --- ESTADOS DO COMPONENTE ---
+  useEffect(() => {
+    const DadosLocal = localStorage.getItem("@clientes");
+    const DadosId = localStorage.getItem("@idOS");
 
-  // Estado para controlar a visibilidade da tela de contatos
+    if (DadosLocal) {
+      setClientes(JSON.parse(DadosLocal));
+    }
+
+    if (DadosId) {
+      setIdOS(JSON.parse(DadosId));
+    }
+
+    setIsLoaded(true);
+  }, []);
+
   const [statusContainerContato, setStatusContainerContato] = useState(
     styles.ScreanContatosinClossed
   );
 
-  // Estado para o formulário de novo cliente
+  const [isLoaded, setIsLoaded] = useState(false);
+
   const [cliente, setCliente] = useState({
     nome: "",
     tel: "",
     email: "",
-    edereco: "", // Corrigido de 'edereco'
+    edereco: "",
   });
 
-  // Estado para a lista de todos os clientes salvos
   const [clientes, setClientes] = useState([]);
-  
-  // Estado para gerar IDs simples (para este exemplo)
+
   const [idOS, setIdOS] = useState(1);
-  
-  // NOVO: Estado para o termo da barra de pesquisa
+
   const [termoBusca, setTermoBusca] = useState("");
-
-
-  // --- FUNÇÕES ---
 
   function statusContainerContatoOff() {
     setStatusContainerContato(styles.ScreanContatosinClossed);
@@ -55,7 +62,6 @@ export default function CadastroCliente() {
     setClientes([...clientes, novoClienteComID]);
     alert("Cliente Salvo com sucesso");
 
-    // Limpa o formulário após o cadastro
     setCliente({
       nome: "",
       tel: "",
@@ -66,22 +72,34 @@ export default function CadastroCliente() {
     setIdOS(idOS + 1);
   }
 
-  // --- LÓGICA DE FILTRAGEM ---
-  
-  // Filtra a lista de clientes com base no termo de busca
-  const clientesFiltrados = clientes.filter((cliente) => {
+  function removeCliente(iddoCliente) {
+    const confimacao = window.confirm("Deseja realmente Reomver o Cliente");
+
+    if (confimacao) {
+      const ListaSemOCLiente = clientes.filter(c => c.id !== iddoCliente);
+      setClientes(ListaSemOCLiente);
+    }
+  }
+
+  const clientesFiltrados = clientes.filter(cliente => {
     const termo = termoBusca.toLowerCase();
-    // Verifica se o nome do cliente (em minúsculas) inclui o termo de busca
+
     const nomeMatch = cliente.nome.toLowerCase().includes(termo);
-    // Verifica se o ID do cliente (convertido para string) inclui o termo de busca
+
     const idMatch = String(cliente.id).includes(termo);
 
     return nomeMatch || idMatch;
   });
 
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem("@clientes", JSON.stringify(clientes));
+      localStorage.setItem("@idOS", JSON.stringify(idOS));
+    }
+  }, [clientes, isLoaded, idOS]);
+
   return (
     <section className={styles.containerCadastroCliente}>
-      {/* ===== SEÇÃO DE VISUALIZAÇÃO DE CONTATOS (MODAL) ===== */}
       <section className={statusContainerContato}>
         <div className={styles.containerNavegação}>
           <button
@@ -93,20 +111,16 @@ export default function CadastroCliente() {
         </div>
 
         <header className={styles.headerContatos}>
-          
-          {/* NOVO: Barra de Pesquisa */}
           <input
             type="text"
             placeholder="Buscar por nome ou ID..."
             className={styles.barraBusca}
             value={termoBusca}
-            onChange={(e) => setTermoBusca(e.target.value)}
+            onChange={e => setTermoBusca(e.target.value)}
           />
         </header>
-        
-        {/* Container da lista com scroll */}
+
         <section className={styles.listaContatos}>
-          {/* Cabeçalho da "tabela" de contatos */}
           <div className={`${styles.contato} ${styles.contatoHeader}`}>
             <p>ID</p>
             <p>Nome</p>
@@ -115,27 +129,31 @@ export default function CadastroCliente() {
             <p>Endereço</p>
           </div>
 
-          {/* Renderiza a lista de clientes filtrados */}
           {clientesFiltrados.length > 0 ? (
-            clientesFiltrados.map((cliente) => (
+            clientesFiltrados.map(cliente => (
               <div key={cliente.id} className={styles.contato}>
                 <p>{cliente.id}</p>
                 <p>{cliente.nome}</p>
                 <p>{cliente.tel}</p>
                 <p>{cliente.email}</p>
                 <p>{cliente.edereco}</p>
+                <button
+                  onClick={() => {
+                    removeCliente(cliente.id);
+                  }}
+                  className={styles.bntRemove}
+                >
+                  {" "}
+                  X{" "}
+                </button>
               </div>
             ))
           ) : (
-            // Mensagem para quando não há resultados
-            <p className={styles.nenhumResultado}>
-              Nenhum cliente encontrado.
-            </p>
+            <p className={styles.nenhumResultado}>Nenhum cliente encontrado.</p>
           )}
         </section>
       </section>
 
-      {/* ===== SEÇÃO DO FORMULÁRIO DE CADASTRO ===== */}
       <form className={styles.formulario} onSubmit={registerCliente}>
         <label className={styles.label}> Nome Completo </label>
         <input
@@ -143,7 +161,7 @@ export default function CadastroCliente() {
           placeholder="digite o nome completo"
           className={styles.inputCadastro}
           value={cliente.nome}
-          onChange={(e) => setCliente({ ...cliente, nome: e.target.value })}
+          onChange={e => setCliente({ ...cliente, nome: e.target.value })}
           autoFocus
           required
         />
@@ -154,7 +172,7 @@ export default function CadastroCliente() {
           placeholder="(00) 00000-0000"
           className={styles.inputCadastro}
           value={cliente.tel}
-          onChange={(e) => setCliente({ ...cliente, tel: e.target.value })}
+          onChange={e => setCliente({ ...cliente, tel: e.target.value })}
           required
         />
 
@@ -164,7 +182,7 @@ export default function CadastroCliente() {
           placeholder="exemplo@gmail.com"
           className={styles.inputCadastro}
           value={cliente.email}
-          onChange={(e) => setCliente({ ...cliente, email: e.target.value })}
+          onChange={e => setCliente({ ...cliente, email: e.target.value })}
         />
 
         <label className={styles.label}> Endereço Completo</label>
@@ -173,7 +191,7 @@ export default function CadastroCliente() {
           placeholder="Rua, número, bairro, estado e CEP"
           className={styles.inputCadastro}
           value={cliente.edereco}
-          onChange={(e) => setCliente({ ...cliente, edereco: e.target.value })}
+          onChange={e => setCliente({ ...cliente, edereco: e.target.value })}
         />
 
         <div className={styles.NavForm}>
@@ -204,7 +222,7 @@ export default function CadastroCliente() {
           </button>
         </div>
       </form>
-      
+
       <div className={styles.containerInlustração}>
         <Lottie
           animationData={animationData}
